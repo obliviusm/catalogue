@@ -13,7 +13,18 @@ const create = () => {
 
     if (response.ok) {
       const { categories } = response.data
-      return { ok: true,categories }
+      return { ok: true, categories }
+    }
+
+    return { ok: false }
+  }
+
+  const getItem = async (itemId) => {
+    const response = await api.get(`/items/${itemId}`)
+
+    if (response.ok) {
+      const { item } = response.data
+      return { ok: true, item }
     }
 
     return { ok: false }
@@ -21,6 +32,7 @@ const create = () => {
 
   return {
     getCategories,
+    getItem
   }
 }
 

@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import api from '../services/api';
-import CategoriesList from './CategoriesList'
+import { Row, Col } from 'reactstrap';
 
-class CategoryPage extends Component {
+import api from '../services/api';
+import ItemCard from './ItemCard';
+
+class ItemPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
-      categories: [],
+      item: null,
     };
   }
 
   async componentDidMount() {
-    const result = await api.getCategories()
+    const result = await api.getItem('awesome-iron-plate')
     if (result.ok) {
       this.setState({
         isLoaded: true,
-        categories: result.categories,
+        item: result.item,
       });
     } else {
       this.setState({
@@ -27,20 +29,23 @@ class CategoryPage extends Component {
   }
 
   render() {
-    const { error, isLoaded, categories } = this.state;
+    const { error, isLoaded, item } = this.state;
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <div>
-          <h3>Select Category</h3>
-          <CategoriesList categories={categories} />
-        </div>
+        <Row>
+          <Col md="3" />
+          <Col md="6">
+            <ItemCard item={item} />
+          </Col>
+          <Col md="3" />
+        </Row>
       )
     }
   }
 }
 
-export default CategoryPage;
+export default ItemPage;
