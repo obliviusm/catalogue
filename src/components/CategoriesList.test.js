@@ -7,6 +7,8 @@ it('renders list of categories', () => {
     { id: 'shoe-id', name: 'Shoes' },
     { id: 'hat-id', name: 'Hat' }
   ]
-  const component = mount(<CategoriesList categories={categories}/>)
+  const component = mount(
+    <CategoriesList categories={categories}/>
+  )
   expect(component).toMatchSnapshot()
 });

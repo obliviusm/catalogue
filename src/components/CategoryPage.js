@@ -26,6 +26,8 @@ class CategoryPage extends Component {
     }
   }
 
+  categoryId = () => this.props.match.params.categoryId
+
   render() {
     const { error, isLoaded, categories } = this.state;
     if (error) {
@@ -36,7 +38,7 @@ class CategoryPage extends Component {
       return (
         <div>
           <h3>Select Category</h3>
-          <CategoriesList categories={categories} />
+          <CategoriesList categories={categories} selectedCategoryId={this.categoryId()} />
         </div>
       )
     }
