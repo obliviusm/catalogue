@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../services/api';
 import CategoriesList from './CategoriesList'
+import ItemsSection from './ItemsSection'
 
 class CategoryPage extends Component {
   constructor(props) {
@@ -21,15 +22,14 @@ class CategoryPage extends Component {
     } else {
       this.setState({
         isLoaded: true,
-        error: 'Please refresh'
+        error: result.error
       });
     }
   }
 
-  categoryId = () => this.props.match.params.categoryId
-
   render() {
     const { error, isLoaded, categories } = this.state;
+    const selectedCategoryId = this.props.match.params.categoryId;
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
@@ -37,8 +37,12 @@ class CategoryPage extends Component {
     } else {
       return (
         <div>
-          <h3>Select Category</h3>
-          <CategoriesList categories={categories} selectedCategoryId={this.categoryId()} />
+          <h3>Select category</h3>
+          <CategoriesList categories={categories} selectedCategoryId={selectedCategoryId} />
+          <h3>Items for selected category</h3>
+          {selectedCategoryId
+            ?  <ItemsSection categoryId={selectedCategoryId} />
+            : 'Category was not selected' }
         </div>
       )
     }

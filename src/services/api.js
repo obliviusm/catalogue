@@ -15,8 +15,8 @@ const create = () => {
       const { categories } = response.data
       return { ok: true, categories }
     }
-
-    return { ok: false }
+    console.log(response)
+    return { ok: false, error: response.problem }
   }
 
   const getItem = async (itemId) => {
@@ -27,12 +27,24 @@ const create = () => {
       return { ok: true, item }
     }
 
-    return { ok: false }
+    return { ok: false, error: response.problem }
+  }
+
+  const getCategoryItems = async (categoryId) => {
+    const response = await api.get(`categories/${categoryId}/items`)
+
+    if (response.ok) {
+      const { items } = response.data
+      return { ok: true, items }
+    }
+
+    return { ok: false, error: response.problem }
   }
 
   return {
     getCategories,
-    getItem
+    getItem,
+    getCategoryItems
   }
 }
 

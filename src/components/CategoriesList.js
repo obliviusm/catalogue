@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 
-const buttonColor = (id, selectedId) => id == selectedId ? 'primary' : 'secondary'
+const buttonColor = (id, selectedId) => id === selectedId ? 'primary' : 'secondary'
 
 const CategoriesList = ({categories, selectedCategoryId}) => (
   <div>

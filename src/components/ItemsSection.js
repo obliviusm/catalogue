@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
 
 import api from '../services/api';
-import ItemCard from './ItemCard';
+import ItemsList from './ItemsList';
 
-class ItemPage extends Component {
+class ItemsSection extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
-      item: null,
+      items: [],
     };
   }
 
-  async componentDidMount() {
-    const result = await api.getItem(this.props.match.params.itemId)
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.categoryId !== prevProps.categoryId) {
+      this.fetchData();
+    }
+  }
+
+  async fetchData() {
+    const result = await api.getCategoryItems(this.props.categoryId)
     if (result.ok) {
       this.setState({
         isLoaded: true,
-        item: result.item,
+        items: result.items,
       });
     } else {
       this.setState({
@@ -29,23 +38,17 @@ class ItemPage extends Component {
   }
 
   render() {
-    const { error, isLoaded, item } = this.state;
+    const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <Row>
-          <Col md="3" />
-          <Col md="6">
-            <ItemCard item={item} />
-          </Col>
-          <Col md="3" />
-        </Row>
+        <ItemsList items={items} />
       )
     }
   }
 }
 
-export default ItemPage;
+export default ItemsSection;

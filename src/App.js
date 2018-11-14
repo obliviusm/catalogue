@@ -8,10 +8,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container className='pt-3'>
+        <Container className='p-3'>
           <Switch>
-            <Route path="/items" exact component={ItemPage} />
-            <Route path="/:categoryId" exact component={CategoryPage} />
+            <Route path="/items/:itemId" exact component={ItemPage} />
+            <Route path="/" exact component={CategoryPage} />
+            <Route path="/:categoryId" component={CategoryPage} />
             <Route render={() => 'Not Found'} />
           </Switch>
         </Container>
