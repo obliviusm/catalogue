@@ -8,7 +8,7 @@ const buttonColor = (id, selectedId) => id === selectedId ? 'primary' : 'seconda
 const CategoriesList = ({categories, selectedCategoryId}) => (
   <div>
     {categories.map(category => (
-      <Link key={category.id} to={`/${category.id}`}>
+      <Link key={category.id} to={`/${category.id}/1`}>
         <Button
           className='m-1'
           color={buttonColor(category.id, selectedCategoryId)}

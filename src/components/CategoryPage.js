@@ -29,7 +29,7 @@ class CategoryPage extends Component {
 
   render() {
     const { error, isLoaded, categories } = this.state;
-    const selectedCategoryId = this.props.match.params.categoryId;
+    const { categoryId, currentPage } = this.props.match.params;
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
@@ -38,10 +38,10 @@ class CategoryPage extends Component {
       return (
         <div>
           <h3>Select category</h3>
-          <CategoriesList categories={categories} selectedCategoryId={selectedCategoryId} />
+          <CategoriesList categories={categories} selectedCategoryId={categoryId} />
           <h3>Items for selected category</h3>
-          {selectedCategoryId
-            ?  <ItemsSection categoryId={selectedCategoryId} />
+          {categoryId
+            ?  <ItemsSection categoryId={categoryId} currentPage={currentPage} />
             : 'Category was not selected' }
         </div>
       )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import api from '../services/api';
 import ItemsList from './ItemsList';
+import ItemsPagination from './ItemsPagination';
 
 class ItemsSection extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class ItemsSection extends Component {
     this.state = {
       isLoaded: false,
       items: [],
+      pages: null
     };
   }
 
@@ -17,17 +19,20 @@ class ItemsSection extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.categoryId !== prevProps.categoryId) {
+    if (this.props.categoryId !== prevProps.categoryId
+      || this.props.currentPage !== prevProps.currentPage) {
       this.fetchData();
     }
   }
 
   async fetchData() {
-    const result = await api.getCategoryItems(this.props.categoryId)
+    const { categoryId, currentPage } = this.props;
+    const result = await api.getCategoryItems({ categoryId, page: currentPage })
     if (result.ok) {
       this.setState({
         isLoaded: true,
         items: result.items,
+        pages: result.pages,
       });
     } else {
       this.setState({
@@ -37,15 +42,29 @@ class ItemsSection extends Component {
     }
   }
 
+  buildPageLink = (page) => page
+    ? `/${this.props.categoryId}/${page}`
+    : `/${this.props.categoryId}/${this.props.currentPage}`
+
   render() {
-    const { error, isLoaded, items } = this.state;
+    const { error, isLoaded, items, pages } = this.state;
+    const { currentPage } = this.props;
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <ItemsList items={items} />
+        <div>
+          <ItemsList items={items} />
+          <ItemsPagination
+            first={this.buildPageLink(pages.first)}
+            previous={this.buildPageLink(pages.previous)}
+            current={currentPage}
+            next={this.buildPageLink(pages.next)}
+            last={this.buildPageLink(pages.last)}
+          />
+        </div>
       )
     }
   }

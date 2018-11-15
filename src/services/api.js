@@ -1,5 +1,6 @@
 import apisauce from 'apisauce'
 import ApiConfig from './ApiConfig'
+import { getPages } from './pagination'
 
 const create = () => {
   const api = apisauce.create({
@@ -30,12 +31,18 @@ const create = () => {
     return { ok: false, error: response.problem }
   }
 
-  const getCategoryItems = async (categoryId) => {
-    const response = await api.get(`categories/${categoryId}/items`)
-
+  const getCategoryItems = async ({categoryId, page}) => {
+    const response = await api.get(`categories/${categoryId}/items`, { page })
     if (response.ok) {
       const { items } = response.data
-      return { ok: true, items }
+
+      const pages = getPages({
+        total: parseInt(response.headers.total),
+        perPage: parseInt(response.headers['per-page']),
+        currentPage: parseInt(page)
+      })
+
+      return { ok: true, items, pages }
     }
 
     return { ok: false, error: response.problem }
