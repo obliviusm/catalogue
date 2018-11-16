@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import ItemPage from './components/ItemPage.js'
-import CategoryPage from './components/CategoryPage.js'
+import ItemPage from './components/ItemPage'
+import CategoryPage from './components/CategoryPage'
 
 class App extends Component {
   render() {

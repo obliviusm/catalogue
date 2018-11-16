@@ -3,7 +3,7 @@ import { Pagination } from 'reactstrap';
 
 import PaginationButton from './PaginationButton'
 
-const ItemsPagination = ({ first, previous, current, next, last }) => (
+const CustomPagination = ({ first, previous, current, next, last }) => (
   <Pagination>
     <PaginationButton page={first} >First</PaginationButton>
     <PaginationButton page={previous} >Previous</PaginationButton>
@@ -13,4 +13,4 @@ const ItemsPagination = ({ first, previous, current, next, last }) => (
   </Pagination>
 )
 
-export default ItemsPagination;
+export default CustomPagination;

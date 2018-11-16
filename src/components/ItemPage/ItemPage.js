@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 
-import api from '../services/api';
+import api from '../../services/api';
 import ItemCard from './ItemCard';
 
 class ItemPage extends Component {

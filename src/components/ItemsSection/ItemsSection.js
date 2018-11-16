@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import api from '../services/api';
+import api from '../../services/api';
 import ItemsList from './ItemsList';
-import ItemsPagination from './ItemsPagination';
+import CustomPagination from '../CustomPagination';
 
 class ItemsSection extends Component {
   constructor(props) {
@@ -57,13 +57,15 @@ class ItemsSection extends Component {
       return (
         <div>
           <ItemsList items={items} />
-          <ItemsPagination
-            first={this.buildPageLink(pages.first)}
-            previous={this.buildPageLink(pages.previous)}
-            current={currentPage}
-            next={this.buildPageLink(pages.next)}
-            last={this.buildPageLink(pages.last)}
-          />
+          <div class="d-flex justify-content-center pt-3">
+            <CustomPagination
+              first={this.buildPageLink(pages.first)}
+              previous={this.buildPageLink(pages.previous)}
+              current={currentPage}
+              next={this.buildPageLink(pages.next)}
+              last={this.buildPageLink(pages.last)}
+            />
+          </div>
         </div>
       )
     }

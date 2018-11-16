@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
 import CategoriesList from './CategoriesList'
-import ItemsSection from './ItemsSection'
+import ItemsSection from '../ItemsSection'
 
 class CategoryPage extends Component {
   constructor(props) {
